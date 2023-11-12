@@ -2,6 +2,7 @@ import axios from 'axios';
 import Form from '../components/Form';
 import { currentUserData } from '../util/signals';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -18,10 +19,12 @@ const Register = () => {
                 'http://localhost:4000/users/register',
                 body
             );
-
             currentUserData.value = response.data.result;
             navigate('/');
         } catch (err) {
+            if (err.response.status === 409) {
+                toast.error(err.response.data.message, { theme: 'colored' });
+            }
             currentUserData.value = null;
         }
     };

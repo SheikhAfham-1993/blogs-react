@@ -1,7 +1,9 @@
 const BlogsCard = ({ blog }) => {
     return (
-        <div className="flex flex-col text-gray-700 dark:text-gray-200 w-full">
-            <h1 className="text-2xl font-bold">{blog?.title}</h1>
+        <div className="flex flex-col text-gray-700 dark:text-gray-200 w-full mt-5">
+            <h1 className="text-2xl font-bold hover:underline hover:text-blue-600 cursor-pointer">
+                {blog?.title}
+            </h1>
             <span>
                 <b>Author:</b> {blog?.author}
             </span>
