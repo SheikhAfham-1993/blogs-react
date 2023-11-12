@@ -2,7 +2,7 @@ import InputWithLabels from './UI/InputWithLabel';
 
 const Form = ({ formName, onSubmit }) => {
     return (
-        <div className="h-full flex items-center justify-center">
+        <div className="h-full flex items-center justify-center w-full">
             <div className="p-5 border border-gray-300 rounded-lg flex flex-col w-full md:w-[400px]">
                 <span className="text-2xl font-bold">{formName}</span>
                 <form onSubmit={onSubmit} className="flex flex-col mt-5">

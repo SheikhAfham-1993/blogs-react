@@ -1,37 +1,19 @@
-import { signal } from '@preact/signals-react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import BlogsCard from './BlogsCard';
-import ReactPaginate from 'react-paginate';
-import { blogs, currentUserData } from '../util/signals';
+import { blogs, currentUserData } from '../../util/signals';
 import { Link } from 'react-router-dom';
 import { PlusIcon } from 'lucide-react';
+import Blogs from './Blogs';
 
-const Blogs = () => {
-    let itemsPerPage = 4;
-    const [itemOffset, setItemOffset] = useState(0);
-    const endOffset = itemOffset + itemsPerPage;
-    const pageCount = Math.ceil(blogs.value.length / itemsPerPage);
+const BlogsMain = () => {
     const [filteredBlogs, setFilteredBlogs] = useState(blogs.value);
-
-    const returnPrevNextTag = (text) => {
-        return (
-            <div className="px-3 flex items-center justify-center font-semibold hover:text-blue-600 hover:underline">
-                {text}
-            </div>
-        );
-    };
-
-    const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % blogs.value.length;
-        setItemOffset(newOffset);
-    };
-
+    console.log(process.env.REACT_APP_API_URL);
     useEffect(() => {
         axios
-            .get('http://localhost:4000/blogs/getAll')
+            .get(`${process.env.REACT_APP_API_URL}/blogs/getAll`)
             .then((result) => {
                 blogs.value = result.data;
+                setFilteredBlogs(result.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -71,30 +53,10 @@ const Blogs = () => {
                     </Link>
                 )}
             </div>
-            {filteredBlogs?.length > itemsPerPage && (
-                <div className="flex justify-end w-full mt-5">
-                    <ReactPaginate
-                        breakLabel=""
-                        nextLabel={returnPrevNextTag('Next >')}
-                        className="flex justify-center items-center space-x-2"
-                        activeClassName="hidden"
-                        pageClassName="hidden"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={undefined}
-                        pageCount={pageCount}
-                        previousLabel={returnPrevNextTag('< Previous')}
-                        renderOnZeroPageCount={() => null}
-                    />
-                </div>
-            )}
-            {filteredBlogs.slice(itemOffset, endOffset).map((blog, index) => (
-                <React.Fragment key={`${blog._id}_${index}`}>
-                    <BlogsCard blog={blog} />
-                    <hr className=" w-full mt-5" />
-                </React.Fragment>
-            ))}
+
+            <Blogs blogs={filteredBlogs} />
         </div>
     );
 };
 
-export default Blogs;
+export default BlogsMain;

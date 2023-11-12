@@ -50,13 +50,14 @@ const CreateNewPost = () => {
             body['description'] = description;
         }
 
+        console.log(currentUserData.value);
         if (currentUserData.value) {
-            body['author'] = currentUserData.value.name;
+            body['author'] = currentUserData.value.userId;
         }
 
         try {
             const response = await axios.post(
-                'http://localhost:4000/blogs/create',
+                `${process.env.REACT_APP_API_URL}/blogs/create`,
                 body
             );
 
@@ -69,34 +70,38 @@ const CreateNewPost = () => {
             console.log(err);
         }
     };
-    return (
-        <div className="w-full flex justify-center h-full">
-            <div className="h-full flex flex-col w-full max-w-full md:max-w-5xl lg:max-w-4xl p-5">
-                <div className="text-2xl font-bold">Create New Post</div>
-                <form onSubmit={createPost} className="h-full flex flex-col">
-                    <InputWithLabels
-                        labelName={'Title'}
-                        labelfor={'title'}
-                        type={'text'}
+    return currentUserData.value ? (
+        <div className="w-full">
+            <div className="text-2xl font-bold">Create New Post</div>
+            <form onSubmit={createPost} className="h-full flex flex-col">
+                <InputWithLabels
+                    labelName={'Title'}
+                    labelfor={'title'}
+                    type={'text'}
+                />
+                <InputWithLabels
+                    labelName={'Content'}
+                    labelfor={'content'}
+                    type={'text'}
+                />
+                <div className="mt-4">
+                    <ReactQuill
+                        modules={modules}
+                        formats={formats}
+                        value={description}
+                        onChange={setDescription}
                     />
-                    <InputWithLabels
-                        labelName={'Content'}
-                        labelfor={'content'}
-                        type={'text'}
-                    />
-                    <div className="mt-4">
-                        <ReactQuill
-                            modules={modules}
-                            formats={formats}
-                            value={description}
-                            onChange={setDescription}
-                        />
-                    </div>
+                </div>
 
-                    <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mt-5">
-                        Create post
-                    </button>
-                </form>
+                <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mt-5">
+                    Create post
+                </button>
+            </form>
+        </div>
+    ) : (
+        <div className="w-full h-full flex items-center justify-center">
+            <div className="text-2xl font-bold">
+                Please login to create a post
             </div>
         </div>
     );

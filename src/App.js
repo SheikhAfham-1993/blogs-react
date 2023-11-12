@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import CreateNewPost from './pages/CreateNewPost';
+import SingleBlog, { getSingleBlogData } from './pages/SingleBlog';
 
 function App() {
     const router = createBrowserRouter([
@@ -28,6 +29,11 @@ function App() {
                 {
                     path: '/createpost',
                     element: <CreateNewPost />
+                },
+                {
+                    path: '/blog/:id',
+                    element: <SingleBlog />,
+                    loader: getSingleBlogData
                 }
             ]
         }

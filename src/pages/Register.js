@@ -16,11 +16,12 @@ const Register = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:4000/users/register',
+                `${process.env.REACT_APP_API_URL}/users/register`,
                 body
             );
-            currentUserData.value = response.data.result;
-            navigate('/');
+            if (response.status === 200) {
+                navigate('/login');
+            }
         } catch (err) {
             if (err.response.status === 409) {
                 toast.error(err.response.data.message, { theme: 'colored' });
