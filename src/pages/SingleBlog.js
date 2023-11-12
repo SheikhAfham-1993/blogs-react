@@ -8,7 +8,11 @@ const SingleBlog = () => {
     const singleBlog = useLoaderData();
 
     if (!singleBlog) {
-        return <div>NO data</div>;
+        return (
+            <div className="h-full w-full flex justify-center items-center text-2xl font-bold">
+                Oops! The blog you are looking for does not exist
+            </div>
+        );
     } else {
         return (
             <div className="w-full flex flex-col space-y-3">
