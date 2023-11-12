@@ -7,7 +7,6 @@ import Blogs from './Blogs';
 
 const BlogsMain = () => {
     const [filteredBlogs, setFilteredBlogs] = useState(blogs.value);
-    console.log(process.env.REACT_APP_API_URL);
     useEffect(() => {
         axios
             .get(`${process.env.REACT_APP_API_URL}/blogs/getAll`)

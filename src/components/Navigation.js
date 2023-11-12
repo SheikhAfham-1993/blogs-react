@@ -5,30 +5,11 @@ import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
 const Navigation = () => {
-    useEffect(() => {
-        // verify if user is logged in with token
-        axios
-            .get(`${process.env.REACT_APP_API_URL}/users/verify`, {
-                withCredentials: true
-            })
-            .then((result) => {
-                console.log(result.data);
-                currentUserData.value = result.data;
-            })
-            .catch((err) => {
-                currentUserData.value = null;
-                console.log(err);
-            });
-    }, []);
-
     const logoutUser = async () => {
         try {
             const response = await axios.post(
                 'http://localhost:4000/users/logout',
-                null,
-                {
-                    withCredentials: true
-                }
+                null
             );
 
             if (response.status === 200) {

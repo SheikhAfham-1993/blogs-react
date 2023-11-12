@@ -50,7 +50,6 @@ const CreateNewPost = () => {
             body['description'] = description;
         }
 
-        console.log(currentUserData.value);
         if (currentUserData.value) {
             body['author'] = currentUserData.value.userId;
         }
