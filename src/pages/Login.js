@@ -24,7 +24,6 @@ const Login = () => {
         } catch (err) {
             console.log(err);
             currentUserData.value = null;
-            // toast.error(err.response.data.message, { theme: 'colored' });
         }
     };
     return <Form formName={'Login'} onSubmit={onSubmit} />;
