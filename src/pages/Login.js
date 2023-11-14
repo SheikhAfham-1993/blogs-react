@@ -19,6 +19,7 @@ const Login = () => {
             );
             if (response.status === 200) {
                 currentUserData.value = response.data.user;
+                localStorage.setItem('token', response.data.token);
                 navigate('/');
             }
         } catch (err) {

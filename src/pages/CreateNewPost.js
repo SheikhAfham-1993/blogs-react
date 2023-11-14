@@ -55,6 +55,12 @@ const CreateNewPost = () => {
         }
 
         try {
+            const token = localStorage.getItem('token');
+            if (token) {
+                axios.defaults.headers.common[
+                    'Authorization'
+                ] = `Bearer ${token}`;
+            }
             const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/blogs/create`,
                 body
@@ -65,6 +71,10 @@ const CreateNewPost = () => {
                 navigate('/');
             }
         } catch (err) {
+            if (err.response.status === 401) {
+                toast.error(err.response.data.message, { theme: 'colored' });
+                navigate('/login');
+            }
             toast.error(err.response.data.message, { theme: 'colored' });
             console.log(err);
         }
