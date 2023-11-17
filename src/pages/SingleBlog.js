@@ -35,9 +35,11 @@ const SingleBlog = () => {
                 </p>
                 <p className="text-lg">{singleBlog.content}</p>
 
-                <div classname="ql-editor" style={{ padding: 0 }}>
-                    {parse(singleBlog.description)}
-                </div>
+                <div
+                    className="ql-editor text-lg"
+                    style={{ padding: 0 }}
+                    dangerouslySetInnerHTML={{ __html: singleBlog.description }}
+                />
             </div>
         );
     }

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { currentUserData } from '../util/signals';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
 
 const Navigation = () => {
     const logoutUser = async () => {
@@ -13,8 +12,9 @@ const Navigation = () => {
             );
 
             if (response.status === 200) {
-                toast.success('Logged out successfully', { theme: 'colored' });
+                localStorage.removeItem('token');
                 currentUserData.value = null;
+                toast.success('Logged out successfully', { theme: 'colored' });
             }
         } catch (err) {
             toast.error(err.response.data.message, { theme: 'colored' });
